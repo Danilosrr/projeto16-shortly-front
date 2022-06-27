@@ -8,17 +8,19 @@ import LoadingContext from '../context/LoadingContext.js';
 import UserContext from '../context/UserContext.js';
 import Header from './shared/Header';
 
-export default function Signin(){
+export default function Signup(){
 
+    const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [ConfirmarSenha, setConfirmarSenha] = useState("");
 
     const { loading, setLoading } = useContext(LoadingContext);
     const { setToken } = useContext(UserContext);
 
     const navigate = useNavigate();
 
-    function signInFunction(event){
+    function signUpFunction(event){
         event.preventDefault();
         setLoading(true);
         
@@ -46,9 +48,11 @@ export default function Signin(){
             <Header type='offline'/>
             <StyledForm>
                 <span><h1>Shortly</h1><img src={logo} alt='logo'/></span>
-                <form className='loginForm' onSubmit={loading?()=>{}:signInFunction}>
+                <form className='loginForm' onSubmit={loading?()=>{}:signUpFunction}>
+                    <input type="text" placeholder='nome'id='nome' value={nome} onChange={(e)=>setNome(e.target.value)} disabled={loading}/>
                     <input type="email" placeholder='email'id='email' value={email} onChange={(e)=>setEmail(e.target.value)} disabled={loading}/>
                     <input type="password" placeholder='senha' id='senha' value={senha} onChange={(e)=>setSenha(e.target.value)} disabled={loading}/>
+                    <input type="password" placeholder='confirmar senha'id='confirmPassword' value={ConfirmarSenha} onChange={(e)=>setConfirmarSenha(e.target.value)} disabled={loading}/>
                     {loading?
                         <button className='loadingButton'>
                             <ThreeDots type="ThreeDots" color="#FFFFFF" height={45} width={45}/>    

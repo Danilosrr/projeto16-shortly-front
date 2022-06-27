@@ -3,8 +3,9 @@ import GlobalStyle from "../assets/GlobalStyle.js";
 
 import LoadingContext from "../context/LoadingContext.js";
 import UserContext from "../context/UserContext.js";
-import Signin from "./SignIn.js";
 import { useState, useEffect } from "react";
+import Signin from "./SignIn.js";
+import Signup from "./Signup.js";
 
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
             const localToken=JSON.parse(localStorage.getItem('shortlyToken'))
             setToken(localToken);
         } catch (error) {
+            console.log(error);
         };
     }, [])
 
@@ -27,7 +29,7 @@ export default function App() {
                     <BrowserRouter>
                         <Routes>
                             <Route path="/" element={<></>}/>
-                            <Route path="/signup" element={<></>}/>
+                            <Route path="/signup" element={<Signup/>}/>
                             <Route path="/signin" element={<Signin/>}/>
                             <Route path="/ranking" element={<></>}/>
                         </Routes>
