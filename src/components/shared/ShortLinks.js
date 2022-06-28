@@ -72,7 +72,8 @@ const StyledUrl = styled.div`
         font-weight: 400;
     }
     .bigUrl{
-        overflow-x: hidden;
+        overflow: hidden;
+        white-space: nowrap;
         width: 40%;
         text-overflow: ellipsis;
     }
