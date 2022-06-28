@@ -31,6 +31,7 @@ export default function ShortLink(props) {
     function acessUrl(shortUrl){
         window.open(`${url}urls/open/${shortUrl}`,"_blank");
         setRefresh(!refresh);
+        window.location.reload();
     };
 
     return (
