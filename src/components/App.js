@@ -6,6 +6,7 @@ import UserContext from "../context/UserContext.js";
 import { useState, useEffect } from "react";
 import Signin from "./SignIn.js";
 import Signup from "./Signup.js";
+import Home from "./Home.js";
 
 
 export default function App() {
@@ -14,7 +15,7 @@ export default function App() {
 
     useEffect(()=>{
         try {
-            const localToken=JSON.parse(localStorage.getItem('shortlyToken'))
+            const localToken=localStorage.getItem('shortlyToken')
             setToken(localToken);
         } catch (error) {
             console.log(error);
@@ -28,7 +29,7 @@ export default function App() {
                 <LoadingContext.Provider value={{loading,setLoading}}>
                     <BrowserRouter>
                         <Routes>
-                            <Route path="/" element={<></>}/>
+                            <Route path="/" element={<Home/>}/>
                             <Route path="/signup" element={<Signup/>}/>
                             <Route path="/signin" element={<Signin/>}/>
                             <Route path="/ranking" element={<></>}/>

@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ThreeDots } from "react-loader-spinner";
 import styled from 'styled-components';
-import logo from "../assets/imgs/logo.svg"
 import LoadingContext from '../context/LoadingContext.js';
 import UserContext from '../context/UserContext.js';
 import Header from './shared/Header';
+import { url } from '../assets/Urls';
+import Banner from './shared/Banner';
 
 export default function Signin(){
 
@@ -23,15 +24,16 @@ export default function Signin(){
         setLoading(true);
         
         const promise = axios.post(
-            "url/login",
+            `${url}signin`,
              {
                 email: email,
                 password: senha
             }
         );
         promise.then((response)=>{
-            setToken(response.data.token);
-            localStorage.setItem('shortlyToken', JSON.stringify(response.data.token));
+            console.log(response.data)
+            setToken(response.data);
+            localStorage.setItem('shortlyToken', response.data);
             setLoading(false);
             navigate("/");    
         });
@@ -45,7 +47,7 @@ export default function Signin(){
         <PaginaLogin>
             <Header type='offline'/>
             <StyledForm>
-                <span><h1>Shortly</h1><img src={logo} alt='logo'/></span>
+                <Banner/>
                 <form className='loginForm' onSubmit={loading?()=>{}:signInFunction}>
                     <input type="email" placeholder='email'id='email' value={email} onChange={(e)=>setEmail(e.target.value)} disabled={loading}/>
                     <input type="password" placeholder='senha' id='senha' value={senha} onChange={(e)=>setSenha(e.target.value)} disabled={loading}/>
@@ -82,23 +84,6 @@ const StyledForm=styled.div`
     text-align: center;
     flex-direction: column;
 
-    span{
-        gap: 20px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    img{
-        object-fit: cover;
-        width: 50px;
-        height: 50px;
-    }
-    h1{
-        font-size: 64px;
-        font-weight: 200;
-        color: #000000;
-    }
     .loginForm{
         box-sizing: border-box;
         display: flex;

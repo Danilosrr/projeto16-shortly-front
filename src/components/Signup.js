@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ThreeDots } from "react-loader-spinner";
 import styled from 'styled-components';
-import logo from "../assets/imgs/logo.svg"
 import LoadingContext from '../context/LoadingContext.js';
-import UserContext from '../context/UserContext.js';
 import Header from './shared/Header';
+import { url } from '../assets/Urls';
+import Banner from './shared/Banner';
 
 export default function Signup(){
 
@@ -14,9 +14,7 @@ export default function Signup(){
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [ConfirmarSenha, setConfirmarSenha] = useState("");
-
     const { loading, setLoading } = useContext(LoadingContext);
-    const { setToken } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -25,17 +23,17 @@ export default function Signup(){
         setLoading(true);
         
         const promise = axios.post(
-            "url/login",
-             {
+            `${url}signup`,
+             {  
+                name: nome,
                 email: email,
-                password: senha
+                password: senha,
+                confirmPassword: ConfirmarSenha
             }
         );
         promise.then((response)=>{
-            setToken(response.data.token);
-            localStorage.setItem('shortlyToken', JSON.stringify(response.data.token));
             setLoading(false);
-            navigate("/");    
+            navigate("/signin");    
         });
         promise.catch((error)=>{
             console.log(error.response)
@@ -47,7 +45,7 @@ export default function Signup(){
         <PaginaLogin>
             <Header type='offline'/>
             <StyledForm>
-                <span><h1>Shortly</h1><img src={logo} alt='logo'/></span>
+                <Banner/>
                 <form className='loginForm' onSubmit={loading?()=>{}:signUpFunction}>
                     <input type="text" placeholder='nome'id='nome' value={nome} onChange={(e)=>setNome(e.target.value)} disabled={loading}/>
                     <input type="email" placeholder='email'id='email' value={email} onChange={(e)=>setEmail(e.target.value)} disabled={loading}/>
@@ -57,7 +55,7 @@ export default function Signup(){
                         <button className='loadingButton'>
                             <ThreeDots type="ThreeDots" color="#FFFFFF" height={45} width={45}/>    
                         </button>
-                        :<input type="submit" value='Entrar' id='enviarLogin'/>
+                        :<input type="submit" value='Criar conta' id='enviarLogin'/>
                     }
                 </form> 
             </StyledForm>
@@ -86,23 +84,6 @@ const StyledForm=styled.div`
     text-align: center;
     flex-direction: column;
 
-    span{
-        gap: 20px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    img{
-        object-fit: cover;
-        width: 50px;
-        height: 50px;
-    }
-    h1{
-        font-size: 64px;
-        font-weight: 200;
-        color: #000000;
-    }
     .loginForm{
         box-sizing: border-box;
         display: flex;

@@ -17,7 +17,7 @@ export default function Header(props) {
     }
     function logout(){
         localStorage.removeItem("tokenUser");
-        navigate('/')
+        navigate('/signin')
     }
     function markHeader(url){
         if (window.location.pathname === url){ return 'marked'}
@@ -26,17 +26,20 @@ export default function Header(props) {
         <StyledHeader>
             {props.type==='online'?
             <>
-                <h4>Seja bem-vindo(a), Pessoa!</h4>
+                <h4>Seja bem-vindo(a), {props.name}!</h4>
                 <span>
                     <h2 onClick={()=>headerBtn('/')} className={markHeader('/')}>Home</h2>
                     <h2 onClick={()=>headerBtn('/ranking')} className={markHeader('/ranking')}>Ranking</h2>
                     <h2 onClick={()=>logout()}>Sair</h2>
                 </span>
             </>:
-            <span>
-                <h2 onClick={()=>headerBtn('/signin')} className={markHeader('/signin')}>Entrar</h2>
-                <h2 onClick={()=>headerBtn('/signup')} className={markHeader('/signup')}>Cadastrar-se</h2>
-            </span>
+            <>            
+                <span/>
+                <span>
+                    <h2 onClick={()=>headerBtn('/signin')} className={markHeader('/signin')}>Entrar</h2>
+                    <h2 onClick={()=>headerBtn('/signup')} className={markHeader('/signup')}>Cadastrar-se</h2>
+                </span>
+            </>
             }
         </StyledHeader>
     )
@@ -47,8 +50,9 @@ const StyledHeader = styled.header`
     top: 0;
     padding: 5%;
     width: 100%;
+    height: 60px;
     display: flex;
-    justify-content: ${props => props.type==='online'?'space-between':'flex-end'};
+    justify-content: space-between;
 
     font-size: 14px;
     color: #9C9C9C;
@@ -61,5 +65,4 @@ const StyledHeader = styled.header`
         display: flex;
         gap: 5px;
     } 
-
 `
