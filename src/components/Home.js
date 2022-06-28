@@ -8,6 +8,7 @@ import UserContext from "../context/UserContext";
 import Banner from "./shared/Banner";
 import Header from "./shared/Header";
 import ShortLink from "./shared/ShortLinks";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
     const { loading, setLoading } = useContext(LoadingContext);
@@ -16,6 +17,7 @@ export default function Home() {
     const [name, setName] = useState('');
     const [link, setLink] = useState('');
     const [arrayLink, setArrayLink] = useState([]);
+    const navigate = useNavigate();
 
     const userToken = !token
     ? localStorage.getItem("shortlyToken")
@@ -48,23 +50,27 @@ export default function Home() {
         });    
     };
     function usersFunction(){
-        const authorization = {
-            headers: {
-              Authorization: `Bearer ${userToken}`
-            }
+        if (!userToken){
+            navigate('/signin');
+        }else{
+            const authorization = {
+                headers: {
+                Authorization: `Bearer ${userToken}`
+                }
+            };
+        
+            const promise = axios.get(
+                `${url}users`,
+                authorization
+            );
+            promise.then((response)=>{
+                setName(response.data.name);
+                setArrayLink(response.data.shortenedUrls[0]);
+            });
+            promise.catch((error)=>{
+                console.log(error.response);
+            });    
         };
-      
-        const promise = axios.get(
-            `${url}users`,
-            authorization
-        );
-        promise.then((response)=>{
-            setName(response.data.name);
-            setArrayLink(response.data.shortenedUrls[0]);
-        });
-        promise.catch((error)=>{
-            console.log(error.response);
-        });
     };
 
     useEffect(()=>{

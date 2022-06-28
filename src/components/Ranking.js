@@ -50,7 +50,9 @@ export default function Ranking() {
 
     useEffect(()=>{
         rankingFunction();
-        userInfo();
+        if(!!userToken){
+            userInfo()
+        };
     },[])
 
     return (
