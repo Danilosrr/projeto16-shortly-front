@@ -32,11 +32,11 @@ export default function ShortLink(props) {
         window.open(`${url}urls/open/${shortUrl}`,"_blank");
         setRefresh(!refresh);
     };
-    
+
     return (
         <StyledUrl>
             <span onClick={()=>acessUrl(shortUrl)}>
-                <h3>{originalUrl}</h3>
+                <h3 className="bigUrl">{originalUrl}</h3>
                 <h3>{shortUrl}</h3>
                 <h3>visitas: {visitCount}</h3>
             </span>
@@ -66,6 +66,15 @@ const StyledUrl = styled.div`
         padding: 2px;
         font-size: 14px;
         border-radius: 12px 0px 0px 12px;
+    }
+    span h3{
+        font-size: 10px;
+        font-weight: 400;
+    }
+    .bigUrl{
+        overflow-x: hidden;
+        width: 40%;
+        text-overflow: ellipsis;
     }
     button{
         background-color: #FFFFFF;

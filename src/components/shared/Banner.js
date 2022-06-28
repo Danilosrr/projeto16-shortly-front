@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function Banner() {
     return (
         <StyledBanner>
-            <h1>Shortly</h1><img src={logo} alt='logo'/>
+            <span><h1>Shortly</h1><img src={logo} alt='logo'/></span>
         </StyledBanner>
     )
 };
@@ -13,16 +13,20 @@ const StyledBanner = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
     width: 100%;
     margin-top: 60px;
-    
+
+    span{
+        display: flex;
+        gap: 15px;
+    }
     img{
-        object-fit: cover;
-        width: 90px;
+        object-fit: scale-down;
+        width: 100%;
+        height: 60px;
     }
     h1{
-        font-size: 64px;
+        font-size: 50px;
         font-weight: 200;
         color: #000000;
     }

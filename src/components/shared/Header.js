@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import UserContext from '../../context/UserContext';
 
 export default function Header(props) {
     const [path, setPath] = useState('/')
+    const {token, setToken} = useContext(UserContext)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -16,8 +18,9 @@ export default function Header(props) {
         }
     }
     function logout(){
-        localStorage.removeItem("tokenUser");
-        navigate('/signin')
+        localStorage.removeItem("shortlyToken");
+        setToken(undefined);
+        navigate('/signin');
     }
     function markHeader(url){
         if (window.location.pathname === url){ return 'marked'}
@@ -54,9 +57,10 @@ const StyledHeader = styled.header`
     display: flex;
     justify-content: space-between;
 
-    font-size: 14px;
-    color: #9C9C9C;
-
+    h2, h4{
+        font-size: 14px;
+        color: #9C9C9C;    
+    }
     .marked, h4{
         font-weight: 700;
         color: #5D9040;

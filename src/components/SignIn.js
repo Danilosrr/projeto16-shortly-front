@@ -31,7 +31,6 @@ export default function Signin(){
             }
         );
         promise.then((response)=>{
-            console.log(response.data)
             setToken(response.data);
             localStorage.setItem('shortlyToken', response.data);
             setLoading(false);
