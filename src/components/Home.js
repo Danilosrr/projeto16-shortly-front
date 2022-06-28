@@ -138,8 +138,10 @@ const StyledContent = styled.div`
         width: 100%;
         height: 380px;
         overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
-    ::-webkit-scrollbar {
+    .homeContent::-webkit-scrollbar {
         display: none;
     }
 `
